@@ -53,18 +53,19 @@
             display: block;
         }
         .btn {
-            background-color: #ff6f61;
+            background-color: #28a745;
             color: white;
             border: none;
-            padding: 12px 24px;
+            padding: 15px 30px;
             margin: 10px;
-            border-radius: 5px;
+            border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             animation: pulse 1s infinite;
+            font-size: 1.2rem;
         }
         .btn:hover {
-            background-color: #ff9a8b;
+            background-color: #218838;
             transform: translateY(-2px);
         }
         @keyframes pulse {
@@ -222,7 +223,7 @@
             if (answer === correctAnswers[questionIndex]) {
                 showQuestion(currentQuestion + 1);
             } else {
-                alert('Nooooo, esa no essssssssss.');
+                alert('Fallaste!!.');
             }
         }
 
