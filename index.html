@@ -3,267 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz Interactivo</title>
+    <title>Quiz para Laura</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
         body {
-            font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #ff6f61, #de6262);
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%);
+            color: #333;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
         }
-
         .container {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
-            width: 90%;
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             text-align: center;
         }
-
-        #question-container, #welcome-container {
+        h1, h2 {
+            color: #ff6f61;
+        }
+        .question {
             display: none;
-            flex-direction: column;
-            align-items: center;
         }
-
-        #question-container.active, #welcome-container.active {
-            display: flex;
+        .question.active {
+            display: block;
         }
-
-        #title {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #333;
-            text-transform: uppercase;
-        }
-
-        #question {
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            color: #555;
-        }
-
-        #question-image {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .option {
-            margin-bottom: 0.75rem;
-            text-align: left;
-            font-size: 1rem;
-            color: #444;
-        }
-
-        .option input[type="radio"] {
-            margin-right: 0.5rem;
-        }
-
-        #submit-button, #start-button {
-            width: 100%;
-            padding: 0.75rem;
-            background: #ff6f61;
+        .btn {
+            background-color: #ff6f61;
             color: white;
             border: none;
-            border-radius: 8px;
-            font-size: 1rem;
+            padding: 10px 20px;
+            margin: 10px;
+            border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s ease, transform 0.3s ease;
-            text-transform: uppercase;
-            margin-top: 1rem;
         }
-
-        #submit-button:hover, #start-button:hover {
-            background: #de6262;
-            transform: translateY(-2px);
+        .btn:hover {
+            background-color: #ff9a8b;
         }
-
-        #feedback {
-            margin-top: 1rem;
-            color: #333;
-            font-size: 1rem;
-        }
-
-        h2, h3 {
-            margin: 0;
-        }
-
-        h2 {
-            font-size: 1.4rem;
-            margin-bottom: 0.5rem;
+        .congratulations {
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div id="welcome-container" class="active">
-            <h1>HOLA LAURA!!!!</h1>
-            <h2>Comienza el juego!!!</h2>
-            <p>Instrucciones:</p>
-            <p>Debes de demostrar que has aprendido en todos estos años en el colegio. Contesta cada pregunta correctamente para avanzar a la siguiente. ¡Buena suerte!</p>
-            <p>Debes superar todas las preguntas para obtener la recompensa.</p>
-            <img src="https://i.gifer.com/origin/cf/cf4f139085feef88f7b5500298984ed5_w200.gif" alt="mono">
-            <button id="start-button" onclick="startQuiz()">Comenzar</button>
+        <div class="welcome-screen">
+            <h1>Bienvenida Laura</h1>
+            <p>¡Prepárate para un divertido quiz! Sigue las instrucciones y responde correctamente para avanzar.</p>
+            <button class="btn" onclick="startQuiz()">Comenzar</button>
         </div>
-        <div id="quiz-container">
-            <div id="question-container">
-                <h2 id="title"></h2>
-                <img id="question-image" src="" alt="Pregunta">
-                <h3 id="question"></h3>
-                <div id="options"></div>
-                <button id="submit-button" onclick="checkAnswer()">Enviar</button>
-                <p id="feedback"></p>
-            </div>
+
+        <div class="question" id="question1">
+            <h2>Educación Primaria - 1º de Primaria - Ciencias Naturales</h2>
+            <p>¿Qué planeta es conocido como el planeta rojo?</p>
+            <button class="btn" onclick="checkAnswer(0, 'a')">a) Tierra</button>
+            <button class="btn" onclick="checkAnswer(0, 'b')">b) Marte</button>
+            <button class="btn" onclick="checkAnswer(0, 'c')">c) Júpiter</button>
+            <button class="btn" onclick="checkAnswer(0, 'd')">d) Venus</button>
+        </div>
+
+        <div class="question" id="question2">
+            <h2>Educación Primaria - 2º de Primaria - Ciencias Naturales</h2>
+            <p>¿Qué animal es conocido por su larga trompa?</p>
+            <button class="btn" onclick="checkAnswer(1, 'a')">a) León</button>
+            <button class="btn" onclick="checkAnswer(1, 'b')">b) Elefante</button>
+            <button class="btn" onclick="checkAnswer(1, 'c')">c) Jirafa</button>
+            <button class="btn" onclick="checkAnswer(1, 'd')">d) Tigre</button>
+        </div>
+
+        <div class="question" id="question3">
+            <h2>Educación Primaria - 3º de Primaria - Ciencias Naturales</h2>
+            <p>¿Qué planta es conocida por sus espinas y su capacidad de sobrevivir en el desierto?</p>
+            <button class="btn" onclick="checkAnswer(2, 'a')">a) Rosa</button>
+            <button class="btn" onclick="checkAnswer(2, 'b')">b) Tulipán</button>
+            <button class="btn" onclick="checkAnswer(2, 'c')">c) Cactus</button>
+            <button class="btn" onclick="checkAnswer(2, 'd')">d) Lirio</button>
+        </div>
+
+        <div class="question" id="question4">
+            <h2>Educación Primaria - 4º de Primaria - Ciencias Naturales</h2>
+            <p>¿Cuál es el órgano principal del sistema circulatorio?</p>
+            <button class="btn" onclick="checkAnswer(3, 'a')">a) Cerebro</button>
+            <button class="btn" onclick="checkAnswer(3, 'b')">b) Pulmón</button>
+            <button class="btn" onclick="checkAnswer(3, 'c')">c) Hígado</button>
+            <button class="btn" onclick="checkAnswer(3, 'd')">d) Corazón</button>
+        </div>
+
+        <div class="question" id="question5">
+            <h2>Educación Primaria - 5º de Primaria - Ciencias Sociales</h2>
+            <p>¿Qué científico formuló la teoría de la relatividad?</p>
+            <button class="btn" onclick="checkAnswer(4, 'a')">a) Isaac Newton</button>
+            <button class="btn" onclick="checkAnswer(4, 'b')">b) Galileo Galilei</button>
+            <button class="btn" onclick="checkAnswer(4, 'c')">c) Albert Einstein</button>
+            <button class="btn" onclick="checkAnswer(4, 'd')">d) Nikola Tesla</button>
+        </div>
+
+        <div class="question" id="question6">
+            <h2>Educación Primaria - 6º de Primaria - Ciencias Naturales</h2>
+            <p>¿Qué gas es esencial para que los seres humanos respiren?</p>
+            <button class="btn" onclick="checkAnswer(5, 'a')">a) Nitrógeno</button>
+            <button class="btn" onclick="checkAnswer(5, 'b')">b) Oxígeno</button>
+            <button class="btn" onclick="checkAnswer(5, 'c')">c) Dióxido de carbono</button>
+            <button class="btn" onclick="checkAnswer(5, 'd')">d) Helio</button>
+        </div>
+
+        <div class="question" id="question7">
+            <h2>ESO - 1º de ESO - Física</h2>
+            <p>¿Qué fuerza nos mantiene pegados a la Tierra?</p>
+            <button class="btn" onclick="checkAnswer(6, 'a')">a) Fuerza electromagnética</button>
+            <button class="btn" onclick="checkAnswer(6, 'b')">b) Fuerza nuclear</button>
+            <button class="btn" onclick="checkAnswer(6, 'c')">c) Fuerza de gravedad</button>
+            <button class="btn" onclick="checkAnswer(6, 'd')">d) Fuerza centrífuga</button>
+        </div>
+
+        <div class="question" id="question8">
+            <h2>ESO - 2º de ESO - Biología</h2>
+            <p>¿Qué tipo de célula carece de núcleo?</p>
+            <button class="btn" onclick="checkAnswer(7, 'a')">a) Célula vegetal</button>
+            <button class="btn" onclick="checkAnswer(7, 'b')">b) Célula animal</button>
+            <button class="btn" onclick="checkAnswer(7, 'c')">c) Célula procariota</button>
+            <button class="btn" onclick="checkAnswer(7, 'd')">d) Célula eucariota</button>
+        </div>
+
+        <div class="question" id="question9">
+            <h2>ESO - 3º de ESO - Química</h2>
+            <p>¿Cuál es el elemento químico con el símbolo 'O'?</p>
+            <button class="btn" onclick="checkAnswer(8, 'a')">a) Oro</button>
+            <button class="btn" onclick="checkAnswer(8, 'b')">b) Oxígeno</button>
+            <button class="btn" onclick="checkAnswer(8, 'c')">c) Osmio</button>
+            <button class="btn" onclick="checkAnswer(8, 'd')">d) Oxalato</button>
+        </div>
+
+        <div class="question" id="question10">
+            <h2>ESO - 4º de ESO - Biología</h2>
+            <p>¿Cuál es la unidad básica de la vida?</p>
+            <button class="btn" onclick="checkAnswer(9, 'a')">a) Átomo</button>
+            <button class="btn" onclick="checkAnswer(9, 'b')">b) Molécula</button>
+            <button class="btn" onclick="checkAnswer(9, 'c')">c) Célula</button>
+            <button class="btn" onclick="checkAnswer(9, 'd')">d) Tejido</button>
+        </div>
+
+        <div class="question" id="question11">
+            <h2>Bachillerato - 1º de Bachillerato - Física</h2>
+            <p>¿Qué mide un amperímetro?</p>
+            <button class="btn" onclick="checkAnswer(10, 'a')">a) Resistencia</button>
+            <button class="btn" onclick="checkAnswer(10, 'b')">b) Voltaje</button>
+            <button class="btn" onclick="checkAnswer(10, 'c')">c) Corriente eléctrica</button>
+            <button class="btn" onclick="checkAnswer(10, 'd')">d) Potencia</button>
+        </div>
+
+        <div class="question" id="question12">
+            <h2>Bachillerato - 2º de Bachillerato - Química</h2>
+            <p>¿Cuál es la fórmula química del ácido sulfúrico?</p>
+            <button class="btn" onclick="checkAnswer(11, 'a')">a) HCl</button>
+            <button class="btn" onclick="checkAnswer(11, 'b')">b) H₂SO₄</button>
+            <button class="btn" onclick="checkAnswer(11, 'c')">c) HNO₃</button>
+            <button class="btn" onclick="checkAnswer(11, 'd')">d) H₂CO₃</button>
+        </div>
+
+        <div class="congratulations">
+            <h2>¡Enhorabuena Laura!</h2>
+            <p>Has completado el quiz y has ganado una recompensa.</p>
         </div>
     </div>
     <script>
-       const questions = [
-            {
-                title: "1º de Primaria - Ciencias Naturales:",
-                question: "¿Qué planeta es conocido como el planeta rojo?",
-                options: ["Tierra", "Marte", "Júpiter", "Venus"],
-                answer: "Marte",
-                image: "https://via.placeholder.com/300x200?text=Planeta+Rojo"
-            },
-            {
-                title: "2º de Primaria - Ciencias Naturales:",
-                question: "¿Qué animal es conocido por su larga trompa?",
-                options: ["León", "Elefante", "Jirafa", "Tigre"],
-                answer: "Elefante",
-                image: "https://via.placeholder.com/300x200?text=Elefante"
-            },
-            {
-                title: "3º de Primaria - Ciencias Naturales:",
-                question: "¿Qué planta es conocida por sus espinas y su capacidad de sobrevivir en el desierto?",
-                options: ["Rosa", "Tulipán", "Cactus", "Lirio"],
-                answer: "Cactus",
-                image: "https://via.placeholder.com/300x200?text=Cactus"
-            },
-            {
-                title: "4º de Primaria - Ciencias Naturales:",
-                question: "¿Cuál es el órgano principal del sistema circulatorio?",
-                options: ["Cerebro", "Pulmón", "Hígado", "Corazón"],
-                answer: "Corazón",
-                image: "https://via.placeholder.com/300x200?text=Corazón"
-            },
-            {
-                title: "5º de Primaria - Ciencias Sociales:",
-                question: "¿Qué científico formuló la teoría de la relatividad?",
-                options: ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Nikola Tesla"],
-                answer: "Albert Einstein",
-                image: "https://via.placeholder.com/300x200?text=Albert+Einstein"
-            },
-            {
-                title: "6º de Primaria - Ciencias Naturales:",
-                question: "¿Qué gas es esencial para que los seres humanos respiren?",
-                options: ["Nitrógeno", "Oxígeno", "Dióxido de carbono", "Helio"],
-                answer: "Oxígeno",
-                image: "https://via.placeholder.com/300x200?text=Oxígeno"
-            },
-            {
-                title: "1º de ESO - Física:",
-                question: "¿Qué fuerza nos mantiene pegados a la Tierra?",
-                options: ["Fuerza electromagnética", "Fuerza nuclear", "Fuerza de gravedad", "Fuerza centrífuga"],
-                answer: "Fuerza de gravedad",
-                image: "https://via.placeholder.com/300x200?text=Gravedad"
-            },
-            {
-                title: "2º de ESO - Biología:",
-                question: "¿Qué tipo de célula carece de núcleo?",
-                options: ["Célula vegetal", "Célula animal", "Célula procariota", "Célula eucariota"],
-                answer: "Célula procariota",
-                image: "https://via.placeholder.com/300x200?text=Célula+procariota"
-            },
-            {
-                title: "3º de ESO - Química:",
-                question: "¿Cuál es el elemento químico con el símbolo 'O'?",
-                options: ["Oro", "Oxígeno", "Osmio", "Oxalato"],
-                answer: "Oxígeno",
-                image: "https://via.placeholder.com/300x200?text=Oxígeno"
-            },
-            {
-                title: "4º de ESO - Biología:",
-                question: "¿Cuál es la unidad básica de la vida?",
-                options: ["Átomo", "Molécula", "Célula", "Tejido"],
-                answer: "Célula",
-                image: "https://via.placeholder.com/300x200?text=Célula"
-            },
-            {
-                title: "1º de Bachillerato - Física:",
-                question: "¿Qué mide un amperímetro?",
-                options: ["Resistencia", "Voltaje", "Corriente eléctrica", "Potencia"],
-                answer: "Corriente eléctrica",
-                image: "https://via.placeholder.com/300x200?text=Amperímetro"
-            },
-            {
-                title: "2º de Bachillerato - Química:",
-                question: "¿Cuál es la fórmula química del ácido sulfúrico?",
-                options: ["HCl", "H₂SO₄", "HNO₃", "H₂CO₃"],
-                answer: "H₂SO₄",
-                image: "https://via.placeholder.com/300x200?text=Ácido+sulfúrico"
-            }
-        ];
-
-
-        let currentQuestionIndex = 0;
+        let currentQuestion = 0;
+        const correctAnswers = ['b', 'b', 'c', 'd', 'c', 'b', 'c', 'c', 'b', 'c', 'c', 'b'];
 
         function startQuiz() {
-            document.getElementById("welcome-container").classList.remove("active");
-            document.getElementById("quiz-container").classList.add("active");
-            loadQuestion();
+            document.querySelector('.welcome-screen').style.display = 'none';
+            showQuestion(0);
         }
 
-        function loadQuestion() {
-            if (currentQuestionIndex < questions.length) {
-                const currentQuestion = questions[currentQuestionIndex];
-                document.getElementById("title").innerText = currentQuestion.title;
-                document.getElementById("question").innerText = currentQuestion.question;
-                document.getElementById("question-image").src = currentQuestion.image;
-                
-                const optionsContainer = document.getElementById("options");
-                optionsContainer.innerHTML = "";
-                
-                currentQuestion.options.forEach(option => {
-                    const optionElement = document.createElement("div");
-                    optionElement.className = "option";
-                    optionElement.innerHTML = `
-                        <label>
-                            <input type="radio" name="option" value="${option}">
-                            ${option}
-                        </label>
-                    `;
-                    optionsContainer.appendChild(optionElement);
+        function showQuestion(index) {
+            const questions = document.querySelectorAll('.question');
+            if (index < questions.length) {
+                questions.forEach((q, i) => {
+                    q.classList.toggle('active', i === index);
                 });
-
-                document.getElementById("feedback").innerText = "";
+                currentQuestion = index;
             } else {
-                document.getElementById("quiz-container").innerHTML = "<h2>¡Enhorabuena!</h2><p>Has respondido correctamente a todas las preguntas.</p><p>Tu regalo está en la ubicación: Parque Central.</p>";
+                document.querySelector('.congratulations').style.display = 'block';
             }
         }
 
-        function checkAnswer() {
-            const selectedOption = document.querySelector('input[name="option"]:checked');
-            if (selectedOption) {
-                const userAnswer = selectedOption.value;
-                const correctAnswer = questions[currentQuestionIndex].answer;
-
-                if (userAnswer === correctAnswer) {
-                    currentQuestionIndex++;
-                    loadQuestion();
-                } else {
-                    document.getElementById("feedback").innerText = "Respuesta incorrecta, inténtalo de nuevo.";
-                }
+        function checkAnswer(questionIndex, answer) {
+            if (answer === correctAnswers[questionIndex]) {
+                showQuestion(currentQuestion + 1);
             } else {
-                document.getElementById("feedback").innerText = "Por favor, selecciona una respuesta.";
+                alert('Noooooo, esa no es!!!!.');
             }
         }
     </script>
