@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -28,10 +27,14 @@
             text-align: center;
         }
 
-        #question-container {
-            display: flex;
+        #question-container, #welcome-container {
+            display: none;
             flex-direction: column;
             align-items: center;
+        }
+
+        #question-container.active, #welcome-container.active {
+            display: flex;
         }
 
         #title {
@@ -65,7 +68,7 @@
             margin-right: 0.5rem;
         }
 
-        #submit-button {
+        #submit-button, #start-button {
             width: 100%;
             padding: 0.75rem;
             background: #ff6f61;
@@ -76,9 +79,10 @@
             cursor: pointer;
             transition: background 0.3s ease, transform 0.3s ease;
             text-transform: uppercase;
+            margin-top: 1rem;
         }
 
-        #submit-button:hover {
+        #submit-button:hover, #start-button:hover {
             background: #de6262;
             transform: translateY(-2px);
         }
@@ -101,51 +105,107 @@
 </head>
 <body>
     <div class="container">
+        <div id="welcome-container" class="active">
+            <h2>Bienvenido al Quiz Interactivo</h2>
+            <p>Instrucciones:</p>
+            <p>Contesta cada pregunta correctamente para avanzar a la siguiente. ¡Buena suerte!</p>
+            <button id="start-button" onclick="startQuiz()">Comenzar</button>
+        </div>
         <div id="quiz-container">
             <div id="question-container">
-                <h2 id="title">1º de Primaria - Ciencias Naturales:</h2>
-                <img id="question-image" src="https://via.placeholder.com/300x200?text=Planeta+Rojo" alt="Pregunta">
-                <h3 id="question">¿Qué planeta es conocido como el planeta rojo?</h3>
-                <div id="options">
-                    <div class="option">
-                        <label>
-                            <input type="radio" name="option" value="Tierra">
-                            Tierra
-                        </label>
-                    </div>
-                    <div class="option">
-                        <label>
-                            <input type="radio" name="option" value="Marte">
-                            Marte
-                        </label>
-                    </div>
-                    <div class="option">
-                        <label>
-                            <input type="radio" name="option" value="Júpiter">
-                            Júpiter
-                        </label>
-                    </div>
-                    <div class="option">
-                        <label>
-                            <input type="radio" name="option" value="Venus">
-                            Venus
-                        </label>
-                    </div>
-                </div>
+                <h2 id="title"></h2>
+                <img id="question-image" src="" alt="Pregunta">
+                <h3 id="question"></h3>
+                <div id="options"></div>
                 <button id="submit-button" onclick="checkAnswer()">Enviar</button>
                 <p id="feedback"></p>
             </div>
         </div>
     </div>
     <script>
+        const questions = [
+            {
+                title: "1º de Primaria - Ciencias Naturales:",
+                question: "¿Qué planeta es conocido como el planeta rojo?",
+                options: ["Tierra", "Marte", "Júpiter", "Venus"],
+                answer: "Marte",
+                image: "https://via.placeholder.com/300x200?text=Planeta+Rojo"
+            },
+            {
+                title: "1º de Primaria - Matemáticas:",
+                question: "¿Cuál es 2 + 2?",
+                options: ["3", "4", "5", "6"],
+                answer: "4",
+                image: "https://via.placeholder.com/300x200?text=Matemáticas"
+            },
+            {
+                title: "1º de Primaria - Ciencias Naturales:",
+                question: "¿Cuál es el color del cielo?",
+                options: ["Verde", "Rojo", "Azul", "Amarillo"],
+                answer: "Azul",
+                image: "https://via.placeholder.com/300x200?text=Cielo"
+            },
+            {
+                title: "1º de Primaria - Ciencias Sociales:",
+                question: "¿Cuál es el océano más grande?",
+                options: ["Atlántico", "Índico", "Ártico", "Pacífico"],
+                answer: "Pacífico",
+                image: "https://via.placeholder.com/300x200?text=Océano"
+            },
+            {
+                title: "1º de Primaria - Ciencias Naturales:",
+                question: "¿Qué es H2O?",
+                options: ["Oxígeno", "Agua", "Hidrógeno", "Nitrógeno"],
+                answer: "Agua",
+                image: "https://via.placeholder.com/300x200?text=Agua"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function startQuiz() {
+            document.getElementById("welcome-container").classList.remove("active");
+            document.getElementById("question-container").classList.add("active");
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < questions.length) {
+                const currentQuestion = questions[currentQuestionIndex];
+                document.getElementById("title").innerText = currentQuestion.title;
+                document.getElementById("question").innerText = currentQuestion.question;
+                document.getElementById("question-image").src = currentQuestion.image;
+                
+                const optionsContainer = document.getElementById("options");
+                optionsContainer.innerHTML = "";
+                
+                currentQuestion.options.forEach(option => {
+                    const optionElement = document.createElement("div");
+                    optionElement.className = "option";
+                    optionElement.innerHTML = `
+                        <label>
+                            <input type="radio" name="option" value="${option}">
+                            ${option}
+                        </label>
+                    `;
+                    optionsContainer.appendChild(optionElement);
+                });
+
+                document.getElementById("feedback").innerText = "";
+            } else {
+                document.getElementById("quiz-container").innerHTML = "<h2>¡Enhorabuena!</h2><p>Has respondido correctamente a todas las preguntas.</p><p>Tu regalo está en la ubicación: Parque Central.</p>";
+            }
+        }
+
         function checkAnswer() {
             const selectedOption = document.querySelector('input[name="option"]:checked');
             if (selectedOption) {
                 const userAnswer = selectedOption.value;
-                const correctAnswer = "Marte";
+                const correctAnswer = questions[currentQuestionIndex].answer;
 
                 if (userAnswer === correctAnswer) {
-                    document.getElementById("feedback").innerText = "¡Correcto!";
+                    currentQuestionIndex++;
+                    loadQuestion();
                 } else {
                     document.getElementById("feedback").innerText = "Respuesta incorrecta, inténtalo de nuevo.";
                 }
@@ -153,6 +213,8 @@
                 document.getElementById("feedback").innerText = "Por favor, selecciona una respuesta.";
             }
         }
+
+        window.onload = loadQuestion;
     </script>
 </body>
 </html>
