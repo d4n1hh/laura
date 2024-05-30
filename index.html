@@ -45,9 +45,6 @@
         .btn:hover {
             background-color: #ff9a8b;
         }
-        .congratulations {
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -165,12 +162,8 @@
             <button class="btn" onclick="checkAnswer(11, 'c')">c) HNO₃</button>
             <button class="btn" onclick="checkAnswer(11, 'd')">d) H₂CO₃</button>
         </div>
-
-        <div class="congratulations">
-            <h2>¡Enhorabuena Laura!</h2>
-            <p>Has completado el quiz y has ganado una recompensa.</p>
-        </div>
     </div>
+
     <script>
         let currentQuestion = 0;
         const correctAnswers = ['b', 'b', 'c', 'd', 'c', 'b', 'c', 'c', 'b', 'c', 'c', 'b'];
@@ -188,7 +181,7 @@
                 });
                 currentQuestion = index;
             } else {
-                document.querySelector('.congratulations').style.display = 'block';
+                window.location.href = 'congrats.html';
             }
         }
 
@@ -196,7 +189,7 @@
             if (answer === correctAnswers[questionIndex]) {
                 showQuestion(currentQuestion + 1);
             } else {
-                alert('Noooooo, esa no es!!!!.');
+                alert('Respuesta incorrecta. Inténtalo de nuevo.');
             }
         }
     </script>
