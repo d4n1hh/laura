@@ -27,10 +27,14 @@
             text-align: center;
         }
 
-        #question-container {
-            display: flex;
+        #question-container, #welcome-container {
+            display: none;
             flex-direction: column;
             align-items: center;
+        }
+
+        #question-container.active, #welcome-container.active {
+            display: flex;
         }
 
         #title {
@@ -64,7 +68,7 @@
             margin-right: 0.5rem;
         }
 
-        #submit-button {
+        #submit-button, #start-button {
             width: 100%;
             padding: 0.75rem;
             background: #ff6f61;
@@ -75,9 +79,10 @@
             cursor: pointer;
             transition: background 0.3s ease, transform 0.3s ease;
             text-transform: uppercase;
+            margin-top: 1rem;
         }
 
-        #submit-button:hover {
+        #submit-button:hover, #start-button:hover {
             background: #de6262;
             transform: translateY(-2px);
         }
@@ -100,10 +105,19 @@
 </head>
 <body>
     <div class="container">
+        <div id="welcome-container" class="active">
+            <h1>HOLA LAURA!!!!</h1>
+            <h2>Comienza el juego!!!</h2>
+            <p>Instrucciones:</p>
+            <p>Debes de demostrar que has aprendido en todos estos años en el colegio. Contesta cada pregunta correctamente para avanzar a la siguiente. ¡Buena suerte!</p>
+            <p>Debes superar todas las preguntas para obtener la recompensa.</p>
+            <img src="https://i.gifer.com/origin/cf/cf4f139085feef88f7b5500298984ed5_w200.gif" alt="mono">
+            <button id="start-button" onclick="startQuiz()">Comenzar</button>
+        </div>
         <div id="quiz-container">
             <div id="question-container">
                 <h2 id="title"></h2>
-                <img id="question-image" src="" alt="">
+                <img id="question-image" src="" alt="Pregunta">
                 <h3 id="question"></h3>
                 <div id="options"></div>
                 <button id="submit-button" onclick="checkAnswer()">Enviar</button>
@@ -112,7 +126,7 @@
         </div>
     </div>
     <script>
-        const questions = [
+       const questions = [
             {
                 title: "1º de Primaria - Ciencias Naturales:",
                 question: "¿Qué planeta es conocido como el planeta rojo?",
@@ -199,7 +213,14 @@
             }
         ];
 
+
         let currentQuestionIndex = 0;
+
+        function startQuiz() {
+            document.getElementById("welcome-container").classList.remove("active");
+            document.getElementById("quiz-container").classList.add("active");
+            loadQuestion();
+        }
 
         function loadQuestion() {
             if (currentQuestionIndex < questions.length) {
@@ -245,8 +266,6 @@
                 document.getElementById("feedback").innerText = "Por favor, selecciona una respuesta.";
             }
         }
-
-        window.onload = loadQuestion;
     </script>
 </body>
 </html>
