@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interactivo</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ff6f61, #de6262);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+        }
+
+        #question-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+            text-transform: uppercase;
+        }
+
+        #question {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #555;
+        }
+
+        #question-image {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .option {
+            margin-bottom: 0.75rem;
+            text-align: left;
+            font-size: 1rem;
+            color: #444;
+        }
+
+        .option input[type="radio"] {
+            margin-right: 0.5rem;
+        }
+
+        #submit-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: #ff6f61;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        #submit-button:hover {
+            background: #de6262;
+            transform: translateY(-2px);
+        }
+
+        #feedback {
+            margin-top: 1rem;
+            color: #333;
+            font-size: 1rem;
+        }
+
+        h2, h3 {
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="quiz-container">
+            <div id="question-container">
+                <h2 id="title">1º de Primaria - Ciencias Naturales:</h2>
+                <img id="question-image" src="https://via.placeholder.com/300x200?text=Planeta+Rojo" alt="Pregunta">
+                <h3 id="question">¿Qué planeta es conocido como el planeta rojo?</h3>
+                <div id="options">
+                    <div class="option">
+                        <label>
+                            <input type="radio" name="option" value="Tierra">
+                            Tierra
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            <input type="radio" name="option" value="Marte">
+                            Marte
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            <input type="radio" name="option" value="Júpiter">
+                            Júpiter
+                        </label>
+                    </div>
+                    <div class="option">
+                        <label>
+                            <input type="radio" name="option" value="Venus">
+                            Venus
+                        </label>
+                    </div>
+                </div>
+                <button id="submit-button" onclick="checkAnswer()">Enviar</button>
+                <p id="feedback"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+        function checkAnswer() {
+            const selectedOption = document.querySelector('input[name="option"]:checked');
+            if (selectedOption) {
+                const userAnswer = selectedOption.value;
+                const correctAnswer = "Marte";
+
+                if (userAnswer === correctAnswer) {
+                    document.getElementById("feedback").innerText = "¡Correcto!";
+                } else {
+                    document.getElementById("feedback").innerText = "Respuesta incorrecta, inténtalo de nuevo.";
+                }
+            } else {
+                document.getElementById("feedback").innerText = "Por favor, selecciona una respuesta.";
+            }
+        }
+    </script>
+</body>
+</html>
