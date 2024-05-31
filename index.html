@@ -79,7 +79,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             font-size: 1.2rem;
-            width: 45%;
+            width: calc(50% - 20px);
             box-sizing: border-box;
             animation: bounce 2s infinite;
         }
@@ -98,7 +98,7 @@
         .answer-container {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-around;
+            justify-content: space-between;
         }
 
         /* Modal */
@@ -164,7 +164,7 @@
 
         <div class="question" id="question1">
             <h2>Educación Primaria - 1º de Primaria - Ciencias Naturales</h2>
-            <img src="1.jpeg" alt="Pregunta 1" style="width: 40%; height: auto;">
+            <img src="1.jpeg" alt="Pregunta 1" style="width: 35%; height: auto;">
             <p>¿Qué planeta es conocido como el planeta rojo?</p>
             <div class="answer-container">
                 <button class="btn" onclick="checkAnswer(0, 'a')">Tierra</button>
