@@ -79,7 +79,7 @@ for (let i = 0; i < 100; i++) {
             to { opacity: 1; }
         }
 
-        h1, h2 {
+        h1, h2, h3 {
             color: #ff8cf5;
             margin-bottom: 20px;
         }
@@ -90,6 +90,9 @@ for (let i = 0; i < 100; i++) {
 
         h2 {
             font-size: 1.5rem;
+        }
+        h3 {
+            font-size: 1.7rem;
         }
 
         p {
@@ -189,7 +192,7 @@ for (let i = 0; i < 100; i++) {
             <h1>HOLA LAURA!!!</h1>
             <p>Debes de demostrar que has aprendido en todos estos años en el colegio, si no, ¡¡¡no hay recompensa!!!
                 prepárate para tu EBAU particular!!!</p>
-                <p><img src="mono.gif" alt="Pregunta 1" style="width: 35%; height: auto;"></p>
+                <p><img src="mono.gif" alt="Pregunta 1" style="width: 40%; height: auto;"></p>
             <p>¡Responde correctamente para avanzar!!.</p>
             <button class="btn" onclick="startQuiz()">Comenzar</button>
         </div>
@@ -207,7 +210,8 @@ for (let i = 0; i < 100; i++) {
         <div id="successModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>¡Enhorabuena Laura! Has pasado de curso.</p>
+                <h3>¡Enhorabuena Laura!</h3>
+                <p>Has pasado de curso.</p>
                 <p><img src="diploma.gif" alt="Pregunta 1" style="width: 35%; height: auto;"></p>
                 <button class="btn" onclick="nextQuestion()">Siguiente curso</button>
             </div>
@@ -215,7 +219,7 @@ for (let i = 0; i < 100; i++) {
 
         <div class="question" id="question1">
             <h2>Educación Primaria - 1º de Primaria - Ciencias Naturales</h2>
-            <img src="1.jpeg" alt="Pregunta 1" style="width: 35%; height: auto;">
+            <img src="1.jpeg" alt="Pregunta 1" style="width: 45%; height: auto;">
             <p>¿Qué planeta es conocido como el planeta rojo?</p>
             <div class="answer-container">
                 <button class="btn" onclick="checkAnswer(0, 'a')">Tierra</button>
