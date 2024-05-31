@@ -74,12 +74,12 @@
             color: white;
             border: none;
             padding: 15px;
-            margin: 10px 0;
+            margin: 10px;
             border-radius: 10px;
             cursor: pointer;
             transition: background-color 0.3s ease, transform 0.3s ease;
             font-size: 1.2rem;
-            width: 100%;
+            width: 45%;
             box-sizing: border-box;
             animation: bounce 2s infinite;
         }
@@ -95,26 +95,50 @@
             60% { transform: translateY(-5px); }
         }
 
-        @media (min-width: 500px) {
-            .btn {
-                max-width: 200px;
-                margin: 10px;
-                display: inline-block;
-            }
+        .answer-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
         }
 
-        .error-message {
-            display: none;
-            background-color: #ff6f61;
-            color: white;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            animation: fadeIn 1s ease-in-out;
+        /* Modal */
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0;
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0); 
+            background-color: rgba(0,0,0,0.4); 
+            padding-top: 60px;
         }
 
-        .error-message.active {
-            display: block;
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto; 
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; 
+            max-width: 500px; 
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -130,117 +154,145 @@
             <button class="btn" onclick="startQuiz()">Comenzar</button>
         </div>
 
-        <div class="error-message" id="error-message">
-            ¡Fallaste! Inténtalo de nuevo.
+        <!-- Modal -->
+        <div id="errorModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p>¡Fallaste! Inténtalo de nuevo.</p>
+            </div>
         </div>
 
         <div class="question" id="question1">
             <h2>Educación Primaria - 1º de Primaria - Ciencias Naturales</h2>
-            <img src="1.jpeg" alt="Pregunta 1" style="width: 10%; height: auto;">
+            <img src="1.jpeg" alt="Pregunta 1" style="width: 40%; height: auto;">
             <p>¿Qué planeta es conocido como el planeta rojo?</p>
-            <button class="btn" onclick="checkAnswer(0, 'a')">a) Tierra</button>
-            <button class="btn" onclick="checkAnswer(0, 'b')">b) Marte</button>
-            <button class="btn" onclick="checkAnswer(0, 'c')">c) Júpiter</button>
-            <button class="btn" onclick="checkAnswer(0, 'd')">d) Venus</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(0, 'a')">Tierra</button>
+                <button class="btn" onclick="checkAnswer(0, 'b')">Marte</button>
+                <button class="btn" onclick="checkAnswer(0, 'c')">Júpiter</button>
+                <button class="btn" onclick="checkAnswer(0, 'd')">Venus</button>
+            </div>
         </div>
 
         <div class="question" id="question2">
             <h2>Educación Primaria - 2º de Primaria - Ciencias Naturales</h2>
             <p>¿Qué animal es conocido por su larga trompa?</p>
-            <button class="btn" onclick="checkAnswer(1, 'a')">a) León</button>
-            <button class="btn" onclick="checkAnswer(1, 'b')">b) Elefante</button>
-            <button class="btn" onclick="checkAnswer(1, 'c')">c) Jirafa</button>
-            <button class="btn" onclick="checkAnswer(1, 'd')">d) Tigre</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(1, 'a')">León</button>
+                <button class="btn" onclick="checkAnswer(1, 'b')">Elefante</button>
+                <button class="btn" onclick="checkAnswer(1, 'c')">Jirafa</button>
+                <button class="btn" onclick="checkAnswer(1, 'd')">Tigre</button>
+            </div>
         </div>
 
         <div class="question" id="question3">
             <h2>Educación Primaria - 3º de Primaria - Ciencias Naturales</h2>
             <p>¿Qué planta es conocida por sus espinas y su capacidad de sobrevivir en el desierto?</p>
-            <button class="btn" onclick="checkAnswer(2, 'a')">a) Rosa</button>
-            <button class="btn" onclick="checkAnswer(2, 'b')">b) Tulipán</button>
-            <button class="btn" onclick="checkAnswer(2, 'c')">c) Cactus</button>
-            <button class="btn" onclick="checkAnswer(2, 'd')">d) Lirio</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(2, 'a')">Rosa</button>
+                <button class="btn" onclick="checkAnswer(2, 'b')">Tulipán</button>
+                <button class="btn" onclick="checkAnswer(2, 'c')">Cactus</button>
+                <button class="btn" onclick="checkAnswer(2, 'd')">Lirio</button>
+            </div>
         </div>
 
         <div class="question" id="question4">
             <h2>Educación Primaria - 4º de Primaria - Ciencias Naturales</h2>
             <p>¿Cuál es el órgano principal del sistema circulatorio?</p>
-            <button class="btn" onclick="checkAnswer(3, 'a')">a) Cerebro</button>
-            <button class="btn" onclick="checkAnswer(3, 'b')">b) Pulmón</button>
-            <button class="btn" onclick="checkAnswer(3, 'c')">c) Hígado</button>
-            <button class="btn" onclick="checkAnswer(3, 'd')">d) Corazón</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(3, 'a')">Cerebro</button>
+                <button class="btn" onclick="checkAnswer(3, 'b')">Pulmón</button>
+                <button class="btn" onclick="checkAnswer(3, 'c')">Hígado</button>
+                <button class="btn" onclick="checkAnswer(3, 'd')">Corazón</button>
+            </div>
         </div>
 
         <div class="question" id="question5">
             <h2>Educación Primaria - 5º de Primaria - Ciencias Sociales</h2>
             <p>¿Qué científico formuló la teoría de la relatividad?</p>
-            <button class="btn" onclick="checkAnswer(4, 'a')">a) Isaac Newton</button>
-            <button class="btn" onclick="checkAnswer(4, 'b')">b) Galileo Galilei</button>
-            <button class="btn" onclick="checkAnswer(4, 'c')">c) Albert Einstein</button>
-            <button class="btn" onclick="checkAnswer(4, 'd')">d) Nikola Tesla</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(4, 'a')">Isaac Newton</button>
+                <button class="btn" onclick="checkAnswer(4, 'b')">Galileo Galilei</button>
+                <button class="btn" onclick="checkAnswer(4, 'c')">Albert Einstein</button>
+                <button class="btn" onclick="checkAnswer(4, 'd')">Nikola Tesla</button>
+            </div>
         </div>
 
         <div class="question" id="question6">
             <h2>Educación Primaria - 6º de Primaria - Ciencias Naturales</h2>
             <p>¿Qué gas es esencial para que los seres humanos respiren?</p>
-            <button class="btn" onclick="checkAnswer(5, 'a')">a) Nitrógeno</button>
-            <button class="btn" onclick="checkAnswer(5, 'b')">b) Oxígeno</button>
-            <button class="btn" onclick="checkAnswer(5, 'c')">c) Dióxido de carbono</button>
-            <button class="btn" onclick="checkAnswer(5, 'd')">d) Helio</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(5, 'a')">Nitrógeno</button>
+                <button class="btn" onclick="checkAnswer(5, 'b')">Oxígeno</button>
+                <button class="btn" onclick="checkAnswer(5, 'c')">Dióxido de carbono</button>
+                <button class="btn" onclick="checkAnswer(5, 'd')">Helio</button>
+            </div>
         </div>
 
         <div class="question" id="question7">
             <h2>ESO - 1º de ESO - Física</h2>
             <p>¿Qué fuerza nos mantiene pegados a la Tierra?</p>
-            <button class="btn" onclick="checkAnswer(6, 'a')">a) Fuerza electromagnética</button>
-            <button class="btn" onclick="checkAnswer(6, 'b')">b) Fuerza nuclear</button>
-            <button class="btn" onclick="checkAnswer(6, 'c')">c) Fuerza de gravedad</button>
-            <button class="btn" onclick="checkAnswer(6, 'd')">d) Fuerza centrífuga</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(6, 'a')">Fuerza electromagnética</button>
+                <button class="btn" onclick="checkAnswer(6, 'b')">Fuerza nuclear</button>
+                <button class="btn" onclick="checkAnswer(6, 'c')">Fuerza de gravedad</button>
+                <button class="btn" onclick="checkAnswer(6, 'd')">Fuerza centrífuga</button>
+            </div>
         </div>
 
         <div class="question" id="question8">
             <h2>ESO - 2º de ESO - Biología</h2>
             <p>¿Qué tipo de célula carece de núcleo?</p>
-            <button class="btn" onclick="checkAnswer(7, 'a')">a) Célula vegetal</button>
-            <button class="btn" onclick="checkAnswer(7, 'b')">b) Célula animal</button>
-            <button class="btn" onclick="checkAnswer(7, 'c')">c) Célula procariota</button>
-            <button class="btn" onclick="checkAnswer(7, 'd')">d) Célula eucariota</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(7, 'a')">Célula vegetal</button>
+                <button class="btn" onclick="checkAnswer(7, 'b')">Célula animal</button>
+                <button class="btn" onclick="checkAnswer(7, 'c')">Célula procariota</button>
+                <button class="btn" onclick="checkAnswer(7, 'd')">Célula eucariota</button>
+            </div>
         </div>
 
         <div class="question" id="question9">
             <h2>ESO - 3º de ESO - Química</h2>
             <p>¿Cuál es el elemento químico con el símbolo 'O'?</p>
-            <button class="btn" onclick="checkAnswer(8, 'a')">a) Oro</button>
-            <button class="btn" onclick="checkAnswer(8, 'b')">b) Oxígeno</button>
-            <button class="btn" onclick="checkAnswer(8, 'c')">c) Osmio</button>
-            <button class="btn" onclick="checkAnswer(8, 'd')">d) Oxalato</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(8, 'a')">Oro</button>
+                <button class="btn" onclick="checkAnswer(8, 'b')">Oxígeno</button>
+                <button class="btn" onclick="checkAnswer(8, 'c')">Osmio</button>
+                <button class="btn" onclick="checkAnswer(8, 'd')">Oxalato</button>
+            </div>
         </div>
 
         <div class="question" id="question10">
             <h2>ESO - 4º de ESO - Biología</h2>
             <p>¿Cuál es la unidad básica de la vida?</p>
-            <button class="btn" onclick="checkAnswer(9, 'a')">a) Átomo</button>
-            <button class="btn" onclick="checkAnswer(9, 'b')">b) Molécula</button>
-            <button class="btn" onclick="checkAnswer(9, 'c')">c) Célula</button>
-            <button class="btn" onclick="checkAnswer(9, 'd')">d) Tejido</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(9, 'a')">Átomo</button>
+                <button class="btn" onclick="checkAnswer(9, 'b')">Molécula</button>
+                <button class="btn" onclick="checkAnswer(9, 'c')">Célula</button>
+                <button class="btn" onclick="checkAnswer(9, 'd')">Tejido</button>
+            </div>
         </div>
 
         <div class="question" id="question11">
             <h2>Bachillerato - 1º de Bachillerato - Física</h2>
             <p>¿Qué mide un amperímetro?</p>
-            <button class="btn" onclick="checkAnswer(10, 'a')">a) Resistencia</button>
-            <button class="btn" onclick="checkAnswer(10, 'b')">b) Voltaje</button>
-            <button class="btn" onclick="checkAnswer(10, 'c')">c) Corriente eléctrica</button>
-            <button class="btn" onclick="checkAnswer(10, 'd')">d) Potencia</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(10, 'a')">Resistencia</button>
+                <button class="btn" onclick="checkAnswer(10, 'b')">Voltaje</button>
+                <button class="btn" onclick="checkAnswer(10, 'c')">Corriente eléctrica</button>
+                <button class="btn" onclick="checkAnswer(10, 'd')">Potencia</button>
+            </div>
         </div>
 
         <div class="question" id="question12">
             <h2>Bachillerato - 2º de Bachillerato - Química</h2>
             <p>¿Cuál es la fórmula química del ácido sulfúrico?</p>
-            <button class="btn" onclick="checkAnswer(11, 'a')">a) HCl</button>
-            <button class="btn" onclick="checkAnswer(11, 'b')">b) H₂SO₄</button>
-            <button class="btn" onclick="checkAnswer(11, 'c')">c) HNO₃</button>
-            <button class="btn" onclick="checkAnswer(11, 'd')">d) H₂CO₃</button>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(11, 'a')">HCl</button>
+                <button class="btn" onclick="checkAnswer(11, 'b')">H₂SO₄</button>
+                <button class="btn" onclick="checkAnswer(11, 'c')">HNO₃</button>
+                <button class="btn" onclick="checkAnswer(11, 'd')">H₂CO₃</button>
+            </div>
         </div>
     </div>
 
@@ -267,12 +319,23 @@
         }
 
         function checkAnswer(questionIndex, answer) {
-            const errorMessage = document.getElementById('error-message');
+            const errorModal = document.getElementById('errorModal');
+            const closeModal = document.querySelector('.modal .close');
             if (answer === correctAnswers[questionIndex]) {
-                errorMessage.classList.remove('active');
+                errorModal.style.display = 'none';
                 showQuestion(currentQuestion + 1);
             } else {
-                errorMessage.classList.add('active');
+                errorModal.style.display = 'block';
+            }
+
+            closeModal.onclick = function() {
+                errorModal.style.display = 'none';
+            }
+
+            window.onclick = function(event) {
+                if (event.target == errorModal) {
+                    errorModal.style.display = 'none';
+                }
             }
         }
 
