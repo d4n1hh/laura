@@ -13,12 +13,13 @@ body {
     color: #333;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     height: 100vh;
     margin: 0;
     overflow: hidden;
     animation: gradientBG 10s ease infinite, hueRotate 20s infinite alternate;
     position: relative;
+    padding-top: 20px; /* Añadir padding-top para ajustar la distancia desde el top */
 }
 
 @keyframes gradientBG {
@@ -68,8 +69,9 @@ for (let i = 0; i < 100; i++) {
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
+            animation: fadeIn 4s ease-in-out;
             vertical-align: top;
+            margin-top: 20px; /* Añadir margen superior si es necesario */
         }
 
         @keyframes fadeIn {
