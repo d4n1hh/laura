@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graduación de Laura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+body {
+    font-family: 'Roboto', sans-serif;
+    background: #f4f4f4;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    height: 100vh;
+    margin: 0;
+    padding-top: 20px;
+}
+
+.container {
+    width: 100%;
+    max-width: 600px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+
+h1, h2, h3 {
+    color: #a6192e; /* Color rojo corporativo */
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 2rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+}
+
+h3 {
+    font-size: 1.7rem;
+}
+
+p {
+    font-size: 1.1rem;
+    line-height: 1.5;
+    margin-bottom: 20px;
+}
+
+.question {
+    display: none;
+}
+
+.question.active {
+    display: block;
+}
+
+.btn {
+    background-color: #a6192e; /* Color rojo corporativo */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    font-size: 1rem;
+    width: calc(50% - 20px); /* Ajuste para dos botones por fila */
+    box-sizing: border-box;
+}
+
+.btn:hover {
+    background-color: #7e141f; /* Color rojo más oscuro */
+    transform: translateY(-2px);
+}
+
+.answer-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+/* Modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgba(0,0,0,0.4); 
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto; 
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; 
+    max-width: 500px; 
+    border-radius: 10px;
+    text-align: center;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+    </style>
+</head>
+<body>
+    <audio id="background-music" loop>
+        <source src="your-music-file.mp3" type="audio/mpeg">
+        Tu navegador no soporta la reproducción de audio.
+    </audio>
+    <div class="container">
+        <div class="welcome-screen">
+            <h1>Muy bien, has llegado hasta aquí.</h1>
+            <p>¡¡Pero aun debes demostrar que estas preparada para ser universitaria, responde algunas cuestiones sobre la Universidad!! </p>
+            <p><img src="homer.gif" alt="Pregunta 1" style="width: 40%; height: auto;"></p>
+            <p></p>
+            <button class="btn" onclick="startQuiz()">Comenzar</button>
+        </div>
+
+        <!-- Modal de error -->
+        <div id="errorModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h2>Incorrecto Señorita!!!</h2>
+                <p><img src="erroruni.gif" alt="Error" style="width: 50%; height: auto;"></p>
+            </div>
+        </div>
+
+        <!-- Modal de acierto -->
+        <div id="successModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <h3>Acertaste!!!</h3>
+                <p></p>
+                <p><img src="victor.gif" alt="Diploma" style="width: 35%; height: auto;"></p>
+                <button class="btn" onclick="nextQuestion()">Siguiente pregunta</button>
+            </div>
+        </div>
+
+        <div class="question" id="question1">
+            <h2>Historia de la Universidad de Salamanca</h2>
+            <p>¿En qué año se fundó la Universidad de Salamanca?</p>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(0, 'a')">1218</button>
+                <button class="btn" onclick="checkAnswer(0, 'b')">1134</button>
+                <button class="btn" onclick="checkAnswer(0, 'c')">1492</button>
+                <button class="btn" onclick="checkAnswer(0, 'd')">1312</button>
+            </div>
+        </div>
+
+        <div class="question" id="question2">
+            <h2>Fundación de la Universidad de Salamanca</h2>
+            <p>¿Quién fue el fundador de la Universidad de Salamanca?</p>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(1, 'a')">Felipe II</button>
+                <button class="btn" onclick="checkAnswer(1, 'b')">Alfonso IX de León</button>
+                <button class="btn" onclick="checkAnswer(1, 'c')">Isabel la Católica</button>
+                <button class="btn" onclick="checkAnswer(1, 'd')">Carlos I de España</button>
+            </div>
+        </div>
+
+        <div class="question" id="question3">
+            <h2>Lema de la Universidad de Salamanca</h2>
+            <p>¿Cuál es el lema de la Universidad de Salamanca?</p>
+            <div class="answer-container">
+                <button class="btn" onclick="checkAnswer(2, 'a')">Luz y Verdad</button>
+                <button class="btn" onclick="checkAnswer(2, 'b')">Omnia Vincit Veritas</button>
+                <button class="btn" onclick="checkAnswer(2, 'c')">Quod Natura Non Dat, Salmantica Non Praestat</button>
+                <button class="btn" onclick="checkAnswer(2, 'd')">Sapientia Aedificavit Sibi Domum</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        let currentQuestion = 0;
+        const correctAnswers = ['a', 'b', 'c'];
+
+        function startQuiz() {
+            document.querySelector('.welcome-screen').style.display = 'none';
+            showQuestion(0);
+            playMusic();
+        }
+
+        function showQuestion(index) {
+            const questions = document.querySelectorAll('.question');
+            if (index < questions.length) {
+                questions.forEach((q, i) => {
+                    q.classList.toggle('active', i === index);
+                });
+                currentQuestion = index;
+            } else {
+                window.location.href = 'congrats.html';
+            }
+        }
+
+        function checkAnswer(questionIndex, answer) {
+            const errorModal = document.getElementById('errorModal');
+            const successModal = document.getElementById('successModal');
+            const closeModal = document.querySelectorAll('.modal .close');
+
+            if (answer === correctAnswers[questionIndex]) {
+                successModal.style.display = 'block';
+            } else {
+                errorModal.style.display = 'block';
+            }
+
+            closeModal.forEach(close => {
+                close.onclick = function() {
+                    errorModal.style.display = 'none';
+                    successModal.style.display = 'none';
+                }
+            });
+
+            window.onclick = function(event) {
+                if (event.target == errorModal) {
+                    errorModal.style.display = 'none';
+                }
+                if (event.target == successModal) {
+                    successModal.style.display = 'none';
+                }
+            }
+        }
+
+        function nextQuestion() {
+            document.getElementById('successModal').style.display = 'none';
+            showQuestion(currentQuestion + 1);
+        }
+
+        function playMusic() {
+            const music = document.getElementById('background-music');
+            music.play();
+        }
+    </script>
+</body>
+</html>
