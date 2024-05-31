@@ -152,7 +152,7 @@
             <h1>HOLA LAURA!!!</h1>
             <p>Debes de demostrar que has aprendido en todos estos años en el colegio, si no, ¡¡¡no hay recompensa!!!
                 prepárate para tu EBAU particular!!!</p>
-                <img src="mono.gif" alt="Pregunta 1" style="width: 35%; height: auto;">
+                <p><img src="mono.gif" alt="Pregunta 1" style="width: 35%; height: auto;"></p>
             <p>¡Responde correctamente para avanzar!!.</p>
             <button class="btn" onclick="startQuiz()">Comenzar</button>
         </div>
@@ -162,6 +162,7 @@
             <div class="modal-content">
                 <span class="close">&times;</span>
                 <p>¡Que nooooo! Inténtalo de nuevo.</p>
+                <p><img src="error.gif" alt="Pregunta 1" style="width: 35%; height: auto;"></p>
             </div>
         </div>
 
@@ -169,7 +170,8 @@
         <div id="successModal" class="modal">
             <div class="modal-content">
                 <span class="close">&times;</span>
-                <p>¡Enhorabuena Laura! Has acertado la pregunta.</p>
+                <p>¡Enhorabuena Laura! Has pasado de curso.</p>
+                <p><img src="diploma.gif" alt="Pregunta 1" style="width: 35%; height: auto;"></p>
                 <button class="btn" onclick="nextQuestion()">Siguiente pregunta</button>
             </div>
         </div>
