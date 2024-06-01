@@ -8,8 +8,9 @@
     <style>
 body {
     font-family: 'Roboto', sans-serif;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fad0c4, #fcb69f, #ff9a9e);
-    background-size: 600% 600%;
+    background-image: url('confeti2.jpg');
+    background-size: cover;
+    background-position: center;
     color: #333;
     display: flex;
     justify-content: center;
@@ -17,10 +18,9 @@ body {
     height: 100vh;
     margin: 0;
     overflow: hidden;
-    animation: gradientBG 10s ease infinite, hueRotate 20s infinite alternate;
-    position: relative;
     padding-top: 20px; /* Añadir padding-top para ajustar la distancia desde el top */
 }
+
 
 @keyframes gradientBG {
     0% {
@@ -64,7 +64,7 @@ for (let i = 0; i < 100; i++) {
         .container {
             width: 100%;
             max-width: 500px;
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 30px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 20px;
@@ -190,8 +190,9 @@ for (let i = 0; i < 100; i++) {
     <div class="container">
         <div class="welcome-screen">
             <h1>HOLA LAURA!!!</h1>
-            <p>Debes de demostrar que has aprendido en todos estos años en el colegio, si no, ¡¡¡no hay recompensa!!!
-                prepárate para tu EBAU particular!!!</p>
+            <p>Debes demostrar que has aprendido en todos estos años en el colegio, si nó, ¡¡¡no hay recompensa!!!</p>
+            <p>Tendrás una pregunta por año académico</p>
+            <p>Prepárate para tu EBAU particular!!!</p>
                 <p><img src="mono.gif" alt="Pregunta 1" style="width: 40%; height: auto;"></p>
             <p>¡Responde correctamente para avanzar!!.</p>
             <button class="btn" onclick="startQuiz()">Comenzar</button>
@@ -237,7 +238,7 @@ for (let i = 0; i < 100; i++) {
                 <button class="btn" onclick="checkAnswer(1, 'a')">León</button>
                 <button class="btn" onclick="checkAnswer(1, 'b')">Elefante</button>
                 <button class="btn" onclick="checkAnswer(1, 'c')">Jirafa</button>
-                <button class="btn" onclick="checkAnswer(1, 'd')">Tigre</button>
+                <button class="btn" onclick="checkAnswer(1, 'd')">Gusano</button>
             </div>
         </div>
 
@@ -294,7 +295,7 @@ for (let i = 0; i < 100; i++) {
             <img src="1e.jpeg" alt="Pregunta 1" style="width: 45%; height: auto;">
             <p>¿Qué fuerza nos mantiene pegados a la Tierra?</p>
             <div class="answer-container">
-                <button class="btn" onclick="checkAnswer(6, 'a')">Fuerza electromagnética</button>
+                <button class="btn" onclick="checkAnswer(6, 'a')">Fuerza bruta</button>
                 <button class="btn" onclick="checkAnswer(6, 'b')">Fuerza nuclear</button>
                 <button class="btn" onclick="checkAnswer(6, 'c')">Fuerza de gravedad</button>
                 <button class="btn" onclick="checkAnswer(6, 'd')">Fuerza centrífuga</button>
