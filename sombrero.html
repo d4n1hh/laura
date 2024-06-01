@@ -137,10 +137,18 @@
             await loadModel();
         }
 
-        captureButton.addEventListener('click', capturePhoto);
+        captureButton.addEventListener('click', async () => {
+            // Pause the video to capture the current frame
+            video.pause();
+            await capturePhoto();
+            // Hide the video element after capturing the photo
+            video.style.display = 'none';
+        });
+
         continueButton.addEventListener('click', () => {
             window.location.href = 'mapa.html';
         });
+
         main();
     </script>
 </body>
