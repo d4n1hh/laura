@@ -33,7 +33,7 @@
             width: 100%;
             height: auto;
         }
-        #captureButton {
+        #captureButton, #continueButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
@@ -45,8 +45,11 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease;
         }
-        #captureButton:hover {
+        #captureButton:hover, #continueButton:hover {
             background-color: #e73370;
+        }
+        #continueButton {
+            display: none;
         }
         video {
             display: none;
@@ -59,6 +62,7 @@
         <canvas id="outputCanvas"></canvas>
     </div>
     <button id="captureButton">Sacar Foto</button>
+    <button id="continueButton">Continuar</button>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
@@ -67,6 +71,7 @@
         const canvas = document.getElementById('outputCanvas');
         const ctx = canvas.getContext('2d');
         const captureButton = document.getElementById('captureButton');
+        const continueButton = document.getElementById('continueButton');
         let model;
 
         async function setupCamera() {
@@ -116,6 +121,8 @@
                     ctx.fillText('ENHORABUENA LAURA', canvas.width / 2 - 100, canvas.height - 20);
                 };
             });
+
+            continueButton.style.display = 'block';
         }
 
         async function main() {
@@ -131,6 +138,9 @@
         }
 
         captureButton.addEventListener('click', capturePhoto);
+        continueButton.addEventListener('click', () => {
+            window.location.href = 'mapa.html';
+        });
         main();
     </script>
 </body>
