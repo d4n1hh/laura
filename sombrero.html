@@ -13,21 +13,40 @@
             justify-content: center;
             align-items: center;
             height: 100%;
-            background-color: #f0f0f0;
+            background-image: url('celebracion_fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            font-family: 'Arial', sans-serif;
         }
         #canvasContainer {
             position: relative;
+            width: 90%;
+            max-width: 320px;
+            border: 5px solid #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            background-color: rgba(255, 255, 255, 0.8);
         }
         canvas, video {
-            border: 2px solid #000;
             display: block;
-            width: 90%;
-            max-width: 480px;
+            width: 100%;
+            height: auto;
         }
         #captureButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff4081;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            transition: background-color 0.3s ease;
+        }
+        #captureButton:hover {
+            background-color: #e73370;
         }
         video {
             display: none;
@@ -92,9 +111,9 @@
 
                 sombreroImage.onload = () => {
                     ctx.drawImage(sombreroImage, sombreroX, sombreroY, sombreroWidth, sombreroHeight);
-                    ctx.font = '30px Arial';
+                    ctx.font = '20px Arial';
                     ctx.fillStyle = 'red';
-                    ctx.fillText('ENHORABUENA LAURA', canvas.width / 2 - 150, canvas.height - 50);
+                    ctx.fillText('ENHORABUENA LAURA', canvas.width / 2 - 100, canvas.height - 20);
                 };
             });
         }
