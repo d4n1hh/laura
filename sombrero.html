@@ -21,6 +21,8 @@
         canvas, video {
             border: 2px solid #000;
             display: block;
+            width: 90%;
+            max-width: 480px;
         }
         #captureButton {
             margin-top: 20px;
@@ -34,7 +36,7 @@
 </head>
 <body>
     <div id="canvasContainer">
-        <video id="video" autoplay playsinline></video>
+        <video id="video" autoplay playsinline muted></video>
         <canvas id="outputCanvas"></canvas>
     </div>
     <button id="captureButton">Sacar Foto</button>
@@ -52,7 +54,8 @@
             const stream = await navigator.mediaDevices.getUserMedia({
                 video: {
                     facingMode: 'user'
-                }
+                },
+                audio: false
             });
             video.srcObject = stream;
             return new Promise((resolve) => {
