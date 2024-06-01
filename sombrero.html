@@ -22,17 +22,17 @@
             position: relative;
             width: 90%;
             max-width: 320px;
-            aspect-ratio: 3 / 4; /* Para mantener el aspecto del video */
+            aspect-ratio: 3 / 4;
             border: 5px solid #fff;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
         canvas, video {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -115,7 +115,7 @@
                     const end = prediction.bottomRight;
                     const size = [end[0] - start[0], end[1] - start[1]];
 
-                    const sombreroWidth = size[0] * 3;
+                    const sombreroWidth = size[0] * 1.5;
                     const sombreroHeight = size[1] * 0.75; // Ajustado para hacer el sombrero más alto
                     const sombreroX = start[0] - (sombreroWidth - size[0]) / 2;
                     const sombreroY = start[1] - sombreroHeight - 10; // Ajustado para posicionar el sombrero más alto
