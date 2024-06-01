@@ -9,6 +9,7 @@
             margin: 0;
             padding: 0;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             height: 100%;
@@ -17,22 +18,31 @@
         #canvasContainer {
             position: relative;
         }
-        canvas {
+        canvas, video {
             border: 2px solid #000;
+            display: block;
+        }
+        #captureButton {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
     <div id="canvasContainer">
+        <video id="video" autoplay></video>
         <canvas id="outputCanvas"></canvas>
     </div>
+    <button id="captureButton">Sacar Foto</button>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
     <script>
-        const video = document.createElement('video');
+        const video = document.getElementById('video');
         const canvas = document.getElementById('outputCanvas');
         const ctx = canvas.getContext('2d');
+        const captureButton = document.getElementById('captureButton');
         let model;
 
         async function setupCamera() {
@@ -55,9 +65,13 @@
             model = await blazeface.load();
         }
 
-        async function detectFaces() {
-            const predictions = await model.estimateFaces(video, false);
+        function drawLive() {
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+            requestAnimationFrame(drawLive);
+        }
 
+        async function capturePhoto() {
+            const predictions = await model.estimateFaces(video, false);
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
             predictions.forEach(prediction => {
@@ -74,10 +88,11 @@
 
                 sombreroImage.onload = () => {
                     ctx.drawImage(sombreroImage, sombreroX, sombreroY, sombreroWidth, sombreroHeight);
+                    ctx.font = '30px Arial';
+                    ctx.fillStyle = 'red';
+                    ctx.fillText('ENHORABUENA LAURA', canvas.width / 2 - 150, canvas.height - 50);
                 };
             });
-
-            requestAnimationFrame(detectFaces);
         }
 
         async function main() {
@@ -87,9 +102,10 @@
             canvas.height = video.height;
 
             await loadModel();
-            detectFaces();
+            drawLive();
         }
 
+        captureButton.addEventListener('click', capturePhoto);
         main();
     </script>
 </body>
