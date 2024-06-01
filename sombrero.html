@@ -27,11 +27,14 @@
             padding: 10px 20px;
             font-size: 18px;
         }
+        video {
+            display: none;
+        }
     </style>
 </head>
 <body>
     <div id="canvasContainer">
-        <video id="video" autoplay></video>
+        <video id="video" autoplay playsinline></video>
         <canvas id="outputCanvas"></canvas>
     </div>
     <button id="captureButton">Sacar Foto</button>
@@ -46,14 +49,12 @@
         let model;
 
         async function setupCamera() {
-            video.width = 640;
-            video.height = 480;
-
             const stream = await navigator.mediaDevices.getUserMedia({
-                video: true
+                video: {
+                    facingMode: 'user'
+                }
             });
             video.srcObject = stream;
-
             return new Promise((resolve) => {
                 video.onloadedmetadata = () => {
                     resolve(video);
@@ -98,11 +99,13 @@
         async function main() {
             await setupCamera();
             video.play();
-            canvas.width = video.width;
-            canvas.height = video.height;
+            video.addEventListener('playing', () => {
+                canvas.width = video.videoWidth;
+                canvas.height = video.videoHeight;
+                drawLive();
+            });
 
             await loadModel();
-            drawLive();
         }
 
         captureButton.addEventListener('click', capturePhoto);
