@@ -16,24 +16,28 @@
             background-image: url('celebracion_fondo.jpg');
             background-size: cover;
             background-position: center;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         #canvasContainer {
             position: relative;
             width: 90%;
             max-width: 320px;
+            aspect-ratio: 3 / 4; /* Para mantener el aspecto del video */
             border: 5px solid #fff;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         canvas, video {
-            display: block;
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover;
         }
-        #captureButton, #continueButton {
+        #captureButton, #continueButton, #downloadButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
@@ -45,13 +49,13 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             transition: background-color 0.3s ease;
         }
-        #captureButton:hover, #continueButton:hover {
+        #captureButton:hover, #continueButton:hover, #downloadButton:hover {
             background-color: #e73370;
         }
-        #continueButton {
+        #continueButton, #downloadButton {
             display: none;
         }
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
     </style>
 </head>
 <body>
@@ -61,6 +65,7 @@
     </div>
     <button id="captureButton">Sacar Foto</button>
     <button id="continueButton">Continuar</button>
+    <button id="downloadButton">Descargar Imagen</button>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
@@ -70,6 +75,7 @@
         const ctx = canvas.getContext('2d');
         const captureButton = document.getElementById('captureButton');
         const continueButton = document.getElementById('continueButton');
+        const downloadButton = document.getElementById('downloadButton');
         let model;
 
         async function setupCamera() {
@@ -110,7 +116,7 @@
                     const size = [end[0] - start[0], end[1] - start[1]];
 
                     const sombreroWidth = size[0] * 1.5;
-                    const sombreroHeight = size[1] * 0.5;
+                    const sombreroHeight = size[1] * 0.75; // Ajustado para hacer el sombrero más alto
                     const sombreroX = start[0] - (sombreroWidth - size[0]) / 2;
                     const sombreroY = start[1] - sombreroHeight - 10; // Ajustado para posicionar el sombrero más alto
 
@@ -119,13 +125,14 @@
                 });
 
                 // Dibuja el texto en el canvas
-                ctx.font = '20px Poppins';
-                ctx.fillStyle = '#ff4081';
+                ctx.font = '30px Poppins';
+                ctx.fillStyle = '#FFFFFF';
                 ctx.textAlign = 'center';
-                ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, canvas.height - 20);
+                ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, 40); // Posicionar el texto en la parte superior
 
-                // Muestra el botón de continuar
+                // Muestra los botones de continuar y descargar
                 continueButton.style.display = 'block';
+                downloadButton.style.display = 'block';
             };
         }
 
@@ -150,6 +157,13 @@
 
         continueButton.addEventListener('click', () => {
             window.location.href = 'mapa.html';
+        });
+
+        downloadButton.addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = 'foto_con_sombrero.png';
+            link.click();
         });
 
         main();
