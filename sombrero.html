@@ -20,8 +20,8 @@
         }
         #canvasContainer {
             position: relative;
-            width: 80vw; /* Ocupa el 80% del ancho de la pantalla */
-            height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
+            width: 80vw;
+            height: 70vh;
             border: 5px solid #fff;
             border-radius: 10px;
             overflow: hidden;
@@ -137,6 +137,7 @@
         const modal = document.getElementById('modal');
         const modalButton = document.getElementById('modalButton');
         let model;
+        let modelReady = false;
         let sombreroImage = new Image();
         sombreroImage.src = 'sombrero.png';
 
@@ -157,16 +158,17 @@
 
         async function loadModel() {
             model = await blazeface.load();
+            modelReady = true;
         }
 
         async function capturePhoto() {
-            // Espera a que el modelo haga la predicción
+            if (!modelReady) {
+                alert('El modelo aún se está cargando, por favor intenta de nuevo en un momento.');
+                return;
+            }
             const predictions = await model.estimateFaces(video, false);
-
-            // Dibuja el fotograma actual del video en el canvas
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-            // Asegúrate de que la imagen del sombrero se haya cargado antes de dibujarla
             if (sombreroImage.complete) {
                 drawSombrero(predictions);
             } else {
@@ -181,26 +183,22 @@
                 const size = [end[0] - start[0], end[1] - start[1]];
 
                 const sombreroWidth = size[0] * 2.1;
-                const sombreroHeight = size[1] * 0.75; // Ajustado para hacer el sombrero más alto
+                const sombreroHeight = size[1] * 0.75;
                 const sombreroX = start[0] - (sombreroWidth - size[0]) / 2;
-                const sombreroY = start[1] - sombreroHeight + 20 ; // Ajustado para posicionar el sombrero más alto
+                const sombreroY = start[1] - sombreroHeight + 20;
 
-                // Dibuja el sombrero en el canvas
                 ctx.drawImage(sombreroImage, sombreroX, sombreroY, sombreroWidth, sombreroHeight);
             });
 
-            // Dibuja el texto en el canvas con sombra negra
             ctx.font = '30px Roboto';
             ctx.fillStyle = '#FFFFFF';
             ctx.textAlign = 'center';
             ctx.shadowColor = 'black';
             ctx.shadowBlur = 5;
-            ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, 40); // Posicionar el texto en la parte superior
+            ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, 40);
 
-            // Muestra los botones de continuar y descargar
             downloadButton.style.display = 'block';
             continueButton.style.display = 'block';
-            
         }
 
         async function main() {
@@ -210,15 +208,12 @@
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
             });
-
             await loadModel();
         }
 
         captureButton.addEventListener('click', async () => {
-            // Pausa el video para capturar el fotograma actual
             video.pause();
             await capturePhoto();
-            // Oculta el video después de capturar la foto
             video.style.display = 'none';
         });
 
@@ -238,7 +233,6 @@
             main();
         });
 
-        // Mostrar el modal al cargar la página
         window.onload = () => {
             modal.style.display = 'flex';
         };
