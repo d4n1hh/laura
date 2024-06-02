@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sombrero de Celebración</title>
@@ -22,8 +20,8 @@
         }
         #canvasContainer {
             position: relative;
-            width: 80vw;
-            height: 70vh;
+            width: 80vw; /* Ocupa el 80% del ancho de la pantalla */
+            height: 70vh; /* Ocupa el 70% de la altura de la pantalla */
             border: 5px solid #fff;
             border-radius: 10px;
             overflow: hidden;
@@ -38,7 +36,7 @@
             height: 100%;
             object-fit: cover;
         }
-        .button {
+        #captureButton, #continueButton, #downloadButton {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 18px;
@@ -55,67 +53,75 @@
         #captureButton:hover {
             background-color: #e73370;
         }
-        #continueButton {
-            background-color: #4caf50;
-            display: none;
-        }
-        #continueButton:hover {
-            background-color: #45a049;
-        }
         #downloadButton {
-            background-color: #2196f3;
-            display: none;
+            background-color: #00bfa5;
         }
         #downloadButton:hover {
-            background-color: #0b7dda;
+            background-color: #00a893;
         }
-        #modal {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            color: white;
-            font-size: 20px;
-            z-index: 1000;
+        #continueButton {
+            background-color: #ff9800;
         }
-        #modalContent {
-            background: white;
-            color: black;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        #continueButton:hover {
+            background-color: #e68900;
         }
-        #modalButton {
-            margin-top: 20px;
-            padding: 10px 20px;
-            font-size: 18px;
-            border: none;
-            border-radius: 5px;
-            background-color: #ff4081;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease;
-        }
-        #modalButton:hover {
-            background-color: #e73370;
+        #continueButton, #downloadButton {
+            display: none;
         }
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+        /* Modal styles */
+        #instructionModal {
+            display: flex;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        #modalContent {
+            background-color: #fefefe;
+            padding: 20px;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        #closeModalButton {
+            background-color: #ff4081;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s ease;
+        }
+        #closeModalButton:hover {
+            background-color: #e73370;
+        }
     </style>
 </head>
 <body>
-    <div id="modal">
+    <div id="instructionModal">
         <div id="modalContent">
-            <h2>Genial Laura!!</h2>
-            <p>Vamos a inmortalizar el momento, sácate una foto!!</p>
-            <button id="modalButton">Entendido</button>
+            <h2>Genial Laura!!!</h2>
+            <p>Vamos a inmortalizar el momento, sácate una foto!! </p>
+            <p><img src="camara.gif" alt="Pregunta 1" style="width: 40%; height: auto;"></p>
+            
+            <button id="closeModalButton">Entendido</button>
         </div>
     </div>
 
@@ -123,9 +129,9 @@
         <video id="video" autoplay playsinline muted></video>
         <canvas id="outputCanvas"></canvas>
     </div>
-    <button id="captureButton" class="button">Sacar Foto</button>
-    <button id="downloadButton" class="button">Descargar Imagen</button>
-    <button id="continueButton" class="button">Continuar</button>
+    <button id="captureButton">Sacar Foto</button>
+    <button id="downloadButton">Descargar Imagen</button>
+    <button id="continueButton">Continuar</button>
 
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
@@ -136,12 +142,15 @@
         const captureButton = document.getElementById('captureButton');
         const continueButton = document.getElementById('continueButton');
         const downloadButton = document.getElementById('downloadButton');
-        const modal = document.getElementById('modal');
-        const modalButton = document.getElementById('modalButton');
+        const instructionModal = document.getElementById('instructionModal');
+        const closeModalButton = document.getElementById('closeModalButton');
         let model;
-        let modelReady = false;
         let sombreroImage = new Image();
         sombreroImage.src = 'sombrero.png';
+
+        closeModalButton.addEventListener('click', () => {
+            instructionModal.style.display = 'none';
+        });
 
         async function setupCamera() {
             const stream = await navigator.mediaDevices.getUserMedia({
@@ -160,17 +169,16 @@
 
         async function loadModel() {
             model = await blazeface.load();
-            modelReady = true;
         }
 
         async function capturePhoto() {
-            if (!modelReady) {
-                alert('El modelo aún se está cargando, por favor intenta de nuevo en un momento.');
-                return;
-            }
+            // Espera a que el modelo haga la predicción
             const predictions = await model.estimateFaces(video, false);
+
+            // Dibuja el fotograma actual del video en el canvas
             ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
+            // Asegúrate de que la imagen del sombrero se haya cargado antes de dibujarla
             if (sombreroImage.complete) {
                 drawSombrero(predictions);
             } else {
@@ -184,23 +192,26 @@
                 const end = prediction.bottomRight;
                 const size = [end[0] - start[0], end[1] - start[1]];
 
-                const sombreroWidth = size[0] * 2.1;
-                const sombreroHeight = size[1] * 0.75;
+                const sombreroWidth = size[0] * 1.5;
+                const sombreroHeight = size[1] * 0.75; // Ajustado para hacer el sombrero más alto
                 const sombreroX = start[0] - (sombreroWidth - size[0]) / 2;
-                const sombreroY = start[1] - sombreroHeight + 20;
+                const sombreroY = start[1] - sombreroHeight - 10; // Ajustado para posicionar el sombrero más alto
 
+                // Dibuja el sombrero en el canvas
                 ctx.drawImage(sombreroImage, sombreroX, sombreroY, sombreroWidth, sombreroHeight);
             });
 
+            // Dibuja el texto en el canvas con sombra negra
             ctx.font = '30px Roboto';
             ctx.fillStyle = '#FFFFFF';
             ctx.textAlign = 'center';
             ctx.shadowColor = 'black';
             ctx.shadowBlur = 5;
-            ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, 40);
+            ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, 40); // Posicionar el texto en la parte superior
 
-            downloadButton.style.display = 'block';
+            // Muestra los botones de continuar y descargar
             continueButton.style.display = 'block';
+            downloadButton.style.display = 'block';
         }
 
         async function main() {
@@ -210,13 +221,27 @@
                 canvas.width = video.videoWidth;
                 canvas.height = video.videoHeight;
             });
+
             await loadModel();
         }
 
         captureButton.addEventListener('click', async () => {
-            video.pause();
-            await capturePhoto();
-            video.style.display = 'none';
+            if (video.paused) {
+                // Si el video está pausado, reanúdalo para capturar otra foto
+                video.play();
+                video.style.display = 'block';
+                ctx.clearRect(0, 0, canvas.width, canvas.height); // Limpia el canvas
+                captureButton.textContent = 'Sacar Foto';
+                continueButton.style.display = 'none';
+                downloadButton.style.display = 'none';
+            } else {
+                // Pausa el video para capturar el fotograma actual
+                video.pause();
+                await capturePhoto();
+                // Oculta el video después de capturar la foto
+                video.style.display = 'none';
+                captureButton.textContent = 'Sacar otra foto';
+            }
         });
 
         continueButton.addEventListener('click', () => {
@@ -230,14 +255,7 @@
             link.click();
         });
 
-        modalButton.addEventListener('click', () => {
-            modal.style.display = 'none';
-            main();
-        });
-
-        window.onload = () => {
-            modal.style.display = 'flex';
-        };
+        main();
     </script>
 </body>
 </html>
