@@ -119,10 +119,10 @@
                 const end = prediction.bottomRight;
                 const size = [end[0] - start[0], end[1] - start[1]];
 
-                const sombreroWidth = size[0] * 2.1;
+                const sombreroWidth = size[0] * 1.5;
                 const sombreroHeight = size[1] * 0.75; // Ajustado para hacer el sombrero más alto
                 const sombreroX = start[0] - (sombreroWidth - size[0]) / 2;
-                const sombreroY = start[1] - sombreroHeight + 20 ; // Ajustado para posicionar el sombrero más alto
+                const sombreroY = start[1] - sombreroHeight - 10; // Ajustado para posicionar el sombrero más alto
 
                 // Dibuja el sombrero en el canvas
                 ctx.drawImage(sombreroImage, sombreroX, sombreroY, sombreroWidth, sombreroHeight);
@@ -137,9 +137,8 @@
             ctx.fillText('ENHORABUENA LAURA', canvas.width / 2, 40); // Posicionar el texto en la parte superior
 
             // Muestra los botones de continuar y descargar
-            downloadButton.style.display = 'block';
             continueButton.style.display = 'block';
-            
+            downloadButton.style.display = 'block';
         }
 
         async function main() {
